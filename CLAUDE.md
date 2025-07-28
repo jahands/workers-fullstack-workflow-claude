@@ -78,8 +78,7 @@ npx wrangler versions deploy    # Promote version to production
 
 ### Interactive Debugging with Playwright
 - Playwright MCP is available for visual debugging and UI verification
-- To test with Playwright, start dev server in background: `npm run dev &`
-- Ensure dev server is running before using Playwright tools
+- To test with Playwright, start dev server with: use Bash tool with `npm run dev &` and `timeout: 5000`
 
 ### SSR Considerations
 - Code runs in both server (Workers) and client contexts
