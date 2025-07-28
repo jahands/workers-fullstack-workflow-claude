@@ -72,7 +72,7 @@ npx wrangler versions deploy    # Promote version to production
   - Interactive components benefit from seeing the actual user flow
   - Data transformations benefit from logic verification  
   - Complex integrations benefit from end-to-end testing
-- Before marking interactive components complete, ask: "Does this work from the user's perspective?" If uncertain, verify with Playwright testing
+- When implementing interactive features, include testing in your todo list and before marking complete ask: "Does this work from the user's perspective?" Verify the user flow with Playwright
 - Vitest is configured with React Testing Library for unit testing
 - Run tests with `npm run test:run`
 
