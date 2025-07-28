@@ -81,6 +81,7 @@ The available tools support different testing approaches - consider which perspe
 
 ### Interactive Debugging with Playwright
 - Playwright MCP is available for visual debugging and UI verification
+- To test with Playwright, start dev server in background: `npm run dev &`
 - Ensure dev server is running before using Playwright tools
 
 ### SSR Considerations
