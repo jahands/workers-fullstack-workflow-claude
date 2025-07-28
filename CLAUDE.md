@@ -51,47 +51,25 @@ npx wrangler versions deploy    # Promote version to production
 - Cloudflare environment variables and bindings are configured in `wrangler.jsonc`
 - The Worker runtime provides access to Cloudflare's platform features through the `env` context
 
-## Development Workflow
+## Development Workflow - THIS IS ALWAYS RELEVENT THROUGHOUT THIS PROJECT
 
 ### Hot Module Replacement (HMR)
 - The dev server (`npm run dev`) supports HMR - NO need to restart for code changes
-- Exception: Changes to `vite.config.ts`, `wrangler.jsonc`, or `tsconfig` files require restart
+  - Exception: Changes to `vite.config.ts`, `wrangler.jsonc`, or `tsconfig` files may require restart
 - Console.logs in worker code (`workers/app.ts`) appear in terminal, not browser console
 
-### Testing Strategy
-- Vitest is configured with React Testing Library for unit/integration tests
-- Test scripts:
-  - `npm test` - Run tests in watch mode
-  - `npm run test:run` - Run tests once (CI mode)
-  - `npm run test:ui` - Open Vitest UI for interactive testing
-- Test file conventions: `*.test.ts`, `*.test.tsx`, `*.spec.ts`, `*.spec.tsx`
-- Example tests included for components (`app/welcome/welcome.test.tsx`) and utilities (`app/utils/example.test.ts`, `workers/utils/headers.test.ts`)
-- Add tests for: complex business logic, data transformations, API handlers, user interactions
-- Mock external dependencies like SVG imports when needed (see examples)
+### Adding New Routes
+- Create route components in `app/routes/` directory
+- Register new routes in `app/routes.ts` (this is required - routes are not automatically discovered)
+- The dev server will hot-reload routes automatically after registration
+
+### Testing
+- Vitest is configured with React Testing Library
+- Run tests with `npm run test:run`
 
 ### Interactive Debugging with Playwright
-The project includes Playwright MCP for visual debugging. Use it for:
-- Verifying UI state after complex changes
-- Testing form submissions and user interactions
-- Checking responsive design and layout issues
-
-Basic Playwright workflow:
-```bash
-# Terminal 1: Keep dev server running
-npm run dev
-
-# In Claude: Use Playwright to navigate and inspect
-mcp__playwright__browser_navigate to http://localhost:5173
-mcp__playwright__browser_snapshot to see current page state
-```
-
-### Verification Checklist
-After making changes:
-1. Check terminal for HMR compilation errors
-2. Run `npm run typecheck` after significant type changes
-3. Run `npm run test:run` to ensure tests pass
-4. For UI changes: Use Playwright snapshot to verify visual state
-5. For API changes: Test full request flow with Playwright
+- Playwright MCP is available for visual debugging and UI verification
+- Ensure dev server is running before using Playwright tools
 
 ### SSR Considerations
 - Code runs in both server (Workers) and client contexts
