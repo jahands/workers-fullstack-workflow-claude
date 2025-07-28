@@ -50,3 +50,45 @@ npx wrangler versions deploy    # Promote version to production
 - The app uses React Router's new data loading patterns and type-safe route modules
 - Cloudflare environment variables and bindings are configured in `wrangler.jsonc`
 - The Worker runtime provides access to Cloudflare's platform features through the `env` context
+
+## Development Workflow
+
+### Hot Module Replacement (HMR)
+- The dev server (`npm run dev`) supports HMR - NO need to restart for code changes
+- Exception: Changes to `vite.config.ts`, `wrangler.jsonc`, or `tsconfig` files require restart
+- Console.logs in worker code (`workers/app.ts`) appear in terminal, not browser console
+
+### Testing Strategy
+- No test framework currently configured - use Vitest for unit/integration tests when needed
+- Test placement: `app/__tests__/` for React components, `workers/__tests__/` for worker logic
+- Add tests for: complex business logic, data transformations, API handlers
+- Skip tests for: simple UI components, straightforward route handlers
+
+### Interactive Debugging with Playwright
+The project includes Playwright MCP for visual debugging. Use it for:
+- Verifying UI state after complex changes
+- Testing form submissions and user interactions
+- Checking responsive design and layout issues
+
+Basic Playwright workflow:
+```bash
+# Terminal 1: Keep dev server running
+npm run dev
+
+# In Claude: Use Playwright to navigate and inspect
+mcp__playwright__browser_navigate to http://localhost:5173
+mcp__playwright__browser_snapshot to see current page state
+```
+
+### Verification Checklist
+After making changes:
+1. Check terminal for HMR compilation errors
+2. Run `npm run typecheck` after significant type changes
+3. For UI changes: Use Playwright snapshot to verify visual state
+4. For API changes: Test full request flow with Playwright
+
+### SSR Considerations
+- Code runs in both server (Workers) and client contexts
+- Use conditional checks for browser-only APIs: `if (typeof window !== 'undefined')`
+- Workers runtime supports many Node.js APIs but check compatibility for specific APIs
+- Server-side data loading happens in route loaders (see React Router docs)
