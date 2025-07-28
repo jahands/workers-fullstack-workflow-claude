@@ -64,18 +64,15 @@ npx wrangler versions deploy    # Promote version to production
 - The dev server will hot-reload routes automatically after registration
 
 ### Understanding Testing Dimensions
-Testing serves different purposes and answers different questions:
-- Code correctness (typecheck, lint): "Does this compile and follow standards?"  
-- User experience (Playwright, manual testing): "Does this work as intended for someone using it?"
-- Logic verification (unit tests): "Do the functions/calculations produce expected results?"
-
-Consider what type of verification best matches what you've built:
-- Interactive components benefit from seeing the actual user flow
-- Data transformations benefit from logic verification  
-- Complex integrations benefit from end-to-end testing
-
-The available tools support different testing approaches - consider which perspective provides the most valuable validation for the specific work being done.
-
+- Testing serves different purposes and answers different questions:
+  - Code correctness (typecheck, lint): "Does this compile and follow standards?"  
+  - User experience (Playwright, manual testing): "Does this work as intended for someone using it?"
+  - Logic verification (unit tests): "Do the functions/calculations produce expected results?"
+- Choose testing approach based on what you built:
+  - Interactive components benefit from seeing the actual user flow
+  - Data transformations benefit from logic verification  
+  - Complex integrations benefit from end-to-end testing
+- Before marking interactive components complete, ask: "Does this work from the user's perspective?" If uncertain, verify with Playwright testing
 - Vitest is configured with React Testing Library for unit testing
 - Run tests with `npm run test:run`
 
