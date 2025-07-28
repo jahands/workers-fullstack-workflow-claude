@@ -59,10 +59,15 @@ npx wrangler versions deploy    # Promote version to production
 - Console.logs in worker code (`workers/app.ts`) appear in terminal, not browser console
 
 ### Testing Strategy
-- No test framework currently configured - use Vitest for unit/integration tests when needed
-- Test placement: `app/__tests__/` for React components, `workers/__tests__/` for worker logic
-- Add tests for: complex business logic, data transformations, API handlers
-- Skip tests for: simple UI components, straightforward route handlers
+- Vitest is configured with React Testing Library for unit/integration tests
+- Test scripts:
+  - `npm test` - Run tests in watch mode
+  - `npm run test:run` - Run tests once (CI mode)
+  - `npm run test:ui` - Open Vitest UI for interactive testing
+- Test file conventions: `*.test.ts`, `*.test.tsx`, `*.spec.ts`, `*.spec.tsx`
+- Example tests included for components (`app/welcome/welcome.test.tsx`) and utilities (`app/utils/example.test.ts`, `workers/utils/headers.test.ts`)
+- Add tests for: complex business logic, data transformations, API handlers, user interactions
+- Mock external dependencies like SVG imports when needed (see examples)
 
 ### Interactive Debugging with Playwright
 The project includes Playwright MCP for visual debugging. Use it for:
@@ -84,8 +89,9 @@ mcp__playwright__browser_snapshot to see current page state
 After making changes:
 1. Check terminal for HMR compilation errors
 2. Run `npm run typecheck` after significant type changes
-3. For UI changes: Use Playwright snapshot to verify visual state
-4. For API changes: Test full request flow with Playwright
+3. Run `npm run test:run` to ensure tests pass
+4. For UI changes: Use Playwright snapshot to verify visual state
+5. For API changes: Test full request flow with Playwright
 
 ### SSR Considerations
 - Code runs in both server (Workers) and client contexts
