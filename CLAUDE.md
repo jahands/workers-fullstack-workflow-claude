@@ -1,0 +1,52 @@
+# CLAUDE.md
+
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
+## Project Overview
+
+This is a full-stack React application built with React Router v7 and designed to run on Cloudflare Workers. The architecture follows a modern SSR pattern with:
+
+- **Frontend**: React 19 with React Router v7 for routing and SSR
+- **Backend**: Cloudflare Workers runtime (`workers/app.ts`)
+- **Styling**: TailwindCSS v4 with Vite plugin
+- **Build**: Vite with React Router dev plugin and Cloudflare plugin
+- **TypeScript**: Full TypeScript support with multiple tsconfig files
+
+## Key Architecture
+
+- `app/` - React Router application code (routes, components, styles)
+- `workers/app.ts` - Cloudflare Worker entry point that handles SSR requests
+- `vite.config.ts` - Vite configuration with Cloudflare, TailwindCSS, and React Router plugins
+- `wrangler.jsonc` - Cloudflare Workers configuration
+- `react-router.config.ts` - React Router configuration with SSR enabled
+
+The application uses React Router's file-based routing system with routes defined in `app/routes/`.
+
+## Essential Commands
+
+### Development
+```bash
+npm run dev          # Start development server with HMR at localhost:5173
+npm run preview      # Preview production build locally
+```
+
+### Building & Type Checking
+```bash
+npm run build        # Create production build using react-router build
+npm run typecheck    # Run full type checking (includes Cloudflare types generation)
+npm run cf-typegen   # Generate Cloudflare Worker types from wrangler.jsonc
+```
+
+### Deployment
+```bash
+npm run deploy       # Build and deploy to Cloudflare Workers
+npx wrangler versions upload    # Deploy preview version
+npx wrangler versions deploy    # Promote version to production
+```
+
+## Development Notes
+
+- TypeScript types are automatically generated for Cloudflare Workers via `wrangler types`
+- The app uses React Router's new data loading patterns and type-safe route modules
+- Cloudflare environment variables and bindings are configured in `wrangler.jsonc`
+- The Worker runtime provides access to Cloudflare's platform features through the `env` context
